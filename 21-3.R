@@ -64,3 +64,16 @@ write.csv(rivers, file="/Users/yuhyun/Downloads/rivers.csv")
 
 data$X #번호
 data$x #rivers 
+
+#data.frame()과 c()를 조합해서 표의 내용을 데이터 프레임으로 만들어 출력해보세요.
+제품 <- c("사과","딸기","수박") ## str type 은 ""을 넣어야 쓸수잇다. 
+가격 <- c(1800,1500,3000)
+판매량 <- c(24,38,13)
+
+df_midterm <- data.frame(제품,가격,판매량 )
+df_midterm
+rm(df_midterm)
+
+#Q2. 앞에서 만든 데이터 프레임을 이용해서 과일 가격 평균, 판매량 평균을 구해보세요
+mean(df_midterm$가격)
+mean(df_midterm$판매량)
