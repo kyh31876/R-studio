@@ -47,7 +47,28 @@ mpg$city <- mpg$cty
 mpg$city <- NULL #변수의 이름바꾸기, 
 head(mpg)
 
+which() #몇번쨰값이 트루가 된다 
+- mpg$cty
 
+47
+
+mpg$city <- NULL #변수의 이름바꾸기, 
+
+48
+
+head(mpg)
+
+49
+
+
+
+50
+
+which() #몇번쨰값이 트루가 된다 
+
+51
+
+#백터값은 , 이 들어가지 않는다
 #Q1. ggplot2 패키지의 mpg 데이터를 사용할 수 있도록 불러온 뒤 복사본을 만드세요
 mpg <- as.data.frame(ggplot2::mpg) # data frame형식으로 바꾸기
 mpg2 <- mpg
