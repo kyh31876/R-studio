@@ -48,3 +48,77 @@ Tip. [ , ]를 이용하여 특정 다리의 자료만 선택한 후 평균 수�
 ## 5   수전교 5689.99695
 ## 6   칠성교   86.08207
 ## 7   후평교   91.19453
+
+
+data1 <- read.csv("C:/Users/OWNER/Downloads/도로교통공단_시도 시군구별 교통사고 통계_20201214.csv")
+#Q1처음 10개의 자료는?
+head(data1,10)
+
+#Q2불러온 자료의 행과 열의 갯 수는?
+dim(data1)
+
+#Q3우리나라 총 교통사고건수는?
+sum(data1$사고건수)
+
+#Q4가장 교통사고가 많이 발생한 시군구는?
+data1 <- as.data.frame(data1)
+data1[data1$시군구==max(data1$사고건수), ]
+
+#Q5가장 사망자수가 많은 시도는?
+data1[data1$시도 == max(data1$사망자수),]
+
+#Q6사고건수를 accident, 사망자수는 death, 중산자수는 severe, 경상자수는 mild, 부상자수는 injured로 변수명을 변경 후 마지막 8개 자료를 확인하여라.
+install.packages("dplyr",  repos = "http://cran.us.r-project.org")
+library(dplyr)
+data1 %>% 
+  rename(accident=사고건수,death=사망자수 ,severe=중상자수 ,mild=경상자수, injured=부상신고자수) -> data1
+
+#Q7사고건수가 1000건 미만인 지역을 사고등급 A,
+#1000건 이상이고 2000건 미만을 사고등급 B,
+#2000건 이상이고 3000건 미만을 사고등급 C,
+#3000건 미만을 사고등급 D 로 분류 한 후 빈도를 확인하여라.
+install.packages("ggplot2" ,repos = "http://cran.us.r-project.org")
+library(ggplot2)
+result <-ifelse(data1$accident<1000, "A" ,
+                ifelse(data1$accident<2000,"B",
+                       ifelse(data1$accident <3000,"C","D")))
+table(result)
+#Q8분류된 사고등급을 막대도표로 시각화 하여라.
+barplot(table(result))
+
+#충청북도 괴산군_수위정보_20200227.csv 파일을 불러와서 다음 문제를 푸세요
+data2 <- read.csv("C:/Users/OWNER/Downloads/충청북도 괴산군_수위정보_20200227.csv")
+
+
+#Q1첫번째 열의 이름을 location으로 변경하여 처음 5개 자료를 출력하세요. unique()함수를 이용하면 location은 7개의 다리위치입니다.
+data2 %>%
+  rename(location= 지역명) -> df_new
+data2$location <- data2$지역명 
+data2$지역명 <- NULL
+head(data2,5)
+
+## [1] "괴강교" "수전교" "교동교" "구기교" "칠성교" "후평교" "도원교"
+
+#Q2수위자료가 가장 많은 다리명을 구하세요.
+library(ggplot2)
+df_new[df_new$수위.Cm.==max(df_new$수위.Cm.),] #수전교
+
+#Q3다리의 위치에 따른 평균 수위를 구하세요. (결과의 예)
+df_new <- as.data.frame(df_new) #데이터 형식 반환 
+data3 <-data.frame(df_new$location, df_new$수위.Cm.)
+data4 <- data3[data3$df_new.location=="괴강교",] 
+mean(data4$df_new.수위.Cm.)
+
+data3 <-data.frame(df_new$location, df_new$수위.Cm.)
+data4 <- data3[data3$df_new.location=="교동교",] 
+mean(data4$df_new.수위.Cm.)
+
+
+##   location   평균수위
+## 1   괴강교   46.94462
+## 2   교동교   30.54268
+## 3   구기교   48.71733
+## 4   도원교   58.67576
+## 5   수전교 5689.99695
+## 6   칠성교   86.08207
+## 7   후평교   91.19453
