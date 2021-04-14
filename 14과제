@@ -1,3 +1,8 @@
+
+---
+title: "과제 200414"
+author: "김유현"
+---
 library(datasets) 
 exam2 <- data.frame(EuStockMarkets)
 #1) exam2 은 몇 개의 행과 몇 개의 열로 구성되어 있나요?..
