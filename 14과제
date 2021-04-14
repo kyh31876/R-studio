@@ -1,0 +1,41 @@
+library(datasets) 
+exam2 <- data.frame(EuStockMarkets)
+dim(exam2)
+tail(exam2,15)
+mean(exam2$DAX)
+median(exam2$CAC)
+max(exam2$FTSE)
+
+install.packages("dplyr")
+library(dplyr)
+exam3 <- exam2 %>% 
+  mutate(DSC=DAX+SMI+CAC)/3
+
+exam3 <- ifelse(exam3$DSC>5000, "A",
+                ifelse(exam3$DSC > 4000,"B",
+                ifelse(exam3$DSC > 3000,"C","D")))
+
+table(exam3)
+
+exam4 <- read.csv("C:/Users/OWNER/Downloads/data_combined.csv")
+head(exam4)
+
+exam4_1<- exam4%>%
+  filter(year< 1995) %>% 
+  select(year,sex,weight)
+
+sum(is.na.data.frame(exam4_1))
+
+exam4_2 <- exam4 %>% 
+  filter(!is.na(hindfoot_length & hindfoot_length<30)) %>% 
+  mutate(hindfoot_half=hindfoot_length/2) %>%
+  select(species_id,hindfoot_half) %>% 
+  arrange(desc(hindfoot_half))
+  
+
+exam4 %>% 
+  filter(!is.na(hindfoot_length)) %>% 
+  group_by(species_id) %>% 
+  summarise(mean=mean(hindfoot_length)) %>% 
+  head(4)
+  
