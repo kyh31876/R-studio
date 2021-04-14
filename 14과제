@@ -6,8 +6,7 @@ exam2 <- data.frame(EuStockMarkets)
 
 
 #1) exam2 은 몇 개의 행과 몇 개의 열로 구성되어 있나요?..
-dim(exam2)
-
+dim(exam2)#rows 1860 columns 4
 
 
 #2) exam2의 자료의 뒷부분 15개를 출력하세요.
@@ -17,9 +16,10 @@ tail(exam2,15)
 
 
 #3) DAX의 평균, SMI의 중앙값, CAC의 최소값, FTSE의 최대값을 구하세요. .
-mean(exam2$DAX)
-median(exam2$CAC)
-max(exam2$FTSE)
+mean(exam2$DAX) #2530.657
+median(exam2$SMI) #2796.35
+min(exam2$CAC) #1611
+max(exam2$FTSE) #6179
 
 
 
@@ -40,9 +40,10 @@ head(exam2_1)
 exam3 <- exam2 %>% 
   mutate(DSC=DAX+SMI+CAC)/3
 
-exam3 <- ifelse(exam3$DSC>5000, "A",
+exam3 <- ifelse(exam3$DSC>5000,"A",
                 ifelse(exam3$DSC > 4000,"B",
-                       ifelse(exam3$DSC > 3000,"C","D")))
+                       ifelse(exam3$DSC > 3000,"C",
+                              "D")))
 
 table(exam3) #빈도 분석 
 
@@ -74,7 +75,7 @@ head(exam4_1)
 
 
 #2)exam4_1의 결측치의 총 갯 수는?
-sum(is.na.data.frame(exam4_1))
+sum(is.na.data.frame(exam4_1)) #1765
 
 
 
@@ -84,8 +85,8 @@ sum(is.na.data.frame(exam4_1))
 #내림차순으로 정렬한  exam4_2로 만드세요. 
 #단, hindfoot_half에는 NA 값이 없고 모든 값은 30보다 작아야 한다. ....4점
 exam4_2 <- exam4 %>% 
-  filter(!is.na(hindfoot_length & hindfoot_length<30)) %>% #결측치제거 조건추출
-  mutate(hindfoot_half=hindfoot_length/2) %>% #파생 변수생성 
+  mutate(hindfoot_half=hindfoot_length/2) %>% #파생 변수생성
+  filter(!is.na(hindfoot_length) & hindfoot_half<30) %>% #결측치제거 조건추출
   select(species_id,hindfoot_half) %>% #칼럼 선택 
   arrange(desc(hindfoot_half)) #내림차순 
 head(exam4_2)
@@ -96,9 +97,8 @@ head(exam4_2)
 
 #4) exam4의 각 종별(species_id) 후족부 길이(hind_foot_length)의 평균을 구하여라. 
 #단, 평균이 NA 값은 없어야 한다.....3점
-exam4 %>% 
-  filter(!is.na(hindfoot_length)) %>% #결측치 제거 
-  group_by(species_id) %>%  # 집단별 요약값 
-  summarise(mean=mean(hindfoot_length)) %>%  #평균추출 
-  head(4)
-head(exam4)
+exam4_3 <- exam4 %>% 
+  group_by(species_id) %>% 
+  summarise(mean=mean(hindfoot_length))  %>% #평균추출 
+  filter(!is.na(mean)) #결측치 제거
+head(exam4_3)
