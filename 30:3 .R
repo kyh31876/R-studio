@@ -98,3 +98,31 @@ data2 <- data.frame(cty, reslut)
 mpg$grade2 <- ifelse(mpg$total >= 30, "A", ifelse(mpg$total >= 25, "B", ifelse(mpg$total >= 20, "C", "D")))
 # A, B, C, D 등급 부여 
 
+
+
+
+#문제1. popadults는 해당 지역의 성인 인구, poptotal은 전체 인구를 나타냅니다. 
+#midwest 데이터에 '전체 인구 대비 미성년 인구 백분율' 변수를 추가하세요.
+
+#문제2. 미성년 인구 백분율이 가장 높은 상위 5개 county(지역)의
+#미성년 인구 백분율을 출력하세요.
+midwest %>% 
+  mutate(total_adolence=(poptotal-popadults)/poptotal*100) %>% 
+  select(county, total_adolence) %>% 
+  arrange(desc(total_adolence)) -> midwest1
+
+
+#문제3. 분류표의 기준에 따라 미성년 비율 등급 변수를 추가하고, 
+#각 등급에 몇 개의 지역이 있는지 알아보세요
+midwest1 %>% 
+  mutate(rate=ifelse(total_adolence>40,"large",
+                     ifelse(total_adolence>=30,"middle",
+                            "small")))
+#문제4. popasian은 해당 지역의 아시아인 인구를 나타냅니다.
+#'전체 인구 대비 아시아인 인구 백분율' 변수를 추가하고, 하위 10개 지역의 state(주), county(지역명), 아시아인 인구 백분율을 출력하세요
+midwest %>% 
+  mutate(total_asian=popasian/poptotal*100) %>% 
+  arrange(total_asian) %>% 
+  select(state, county) %>% 
+  head(10)
+  
