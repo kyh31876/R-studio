@@ -1,0 +1,39 @@
+ex1 <- read.csv("/Users/yuhyun/Downloads/IMDB-Movie-Data.csv")
+#1.각 변수가 수치형(연속형) 자료인지 아니면 문자형(이산형) 자료인지 확인 후 주석으로 표기하세요
+names(ex1) # ""안에 있으면 범주형
+
+
+#2.가장 많은 Genre는 무엇인지 출력하세요.
+install.packages("dplry")
+library(dplyr)
+
+ex1 %>%
+  group_by(Genre) %>% 
+  summarise(n=n()) %>% 
+  arrange(desc(n))
+  
+  
+3.IMDB에 언급된 감독의 수를 출력하세요.
+unique(ex1$Director) #643
+
+4.영화상영년도의 빈도를 막대도표로 그리세요.
+install.packages("ggplot2")
+library(ggplot2)
+
+ggplot(data=ex1, aes(x= Year)) +
+  geom_bar()
+ 5. 상영시간의 히스토그램과 상자그림를 그리세요.
+ex1 <-ex1 %>% 
+  rename(Runtime=Runtime..Minutes.)
+
+ggplot()
+ 6.상영시간의 이상치의 갯 수를 구하여라.
+
+7. 수익(Revenue..Millions.) 중 결측치의 갯 수를 출력하세요.
+
+
+8.년도에 따른 수익을 상자도표로 그리세요.
+
+
+
+
