@@ -21,3 +21,14 @@ hist(population)
 
 shapiro.test(population)
 
+
+
+
+#연속형(수치형) : summary, boxplot, hist, density 
+#범주형(문자형): table, barplot:그림그리기 
+
+#이변량; 둘다 연속형 떄는 cor, plot
+#둘다 범주형; chisq.test(교차검증) 
+#범주형 ,연속형 t.test, 분산분석 , aov, oneway.test
+
+ 
