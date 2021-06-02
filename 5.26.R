@@ -19,7 +19,7 @@ set.seed((100))
 population <- runif(100,5,10)
 hist(population)
 
-shapiro.test(population)
+shapiro.test(population)®®
 
 
 
