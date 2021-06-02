@@ -1,5 +1,42 @@
+#데이터 탐색하기
+#데이터 내용, 구조, 타입을 파악한다.
+#str, summary, head, tail, dim 등을 사용하여 자료 확인
+
+library(dplyr)
+mpg <- ggplot2::mpg
+
+head(mpg)
+srt(mpg)
+
+
+#연속형 변수의 분석 
+library(ggplot2)
+ggplot(data=mpg, aes(x=hwy))+geom_histogram()
+
+ggplot(data=mpg, aes(x=hwy))+geom_boxplot()
+
+ggplot(data=mpg, aes(x=hwy))+geom_density()
+
+c(mean(mpg$hwy), median(mean(mpg$hwy)), var(mpg$hwy), sd(mpg$hwy), mad(mpg$hwy), quantile(mpg$hwy))
+
+#데이터 정규성 검사: qqplot, qqline 함수는 분포가 정규분포와 얼마나 유사한지 검사하는데 사용된다.
+qqnorm(mpg$hwy)
+qqline(mpg$hwy)
+
+
+#이상점 찾아보기: boxplot() 사용
+boxplot(mpg$hwy)$out
+
+
+
 mu =30 
 sigma =10 
+
+
+#평균이 30이고 표준편차가 10인 난수를 100개 생성하였으므로 위 자료는 정규분포를 따릅니다.
+#이제 임의로 3개의 표본을 추출하여 표본 평균을 구해보겠습니다.
+#그리고 그 횟수를 10, 30, 50, 100번 반복했을 때의 표본평균의 분포를 그려보겠습니다.
+
 
 set.seed(100)
 population <- rnorm(100,mean=mu,sd=sigma) #평균과 표준편차를 만족하는 자료 100개 
@@ -21,7 +58,26 @@ hist(population)
 
 shapiro.test(population)
 
+set.seed(100)
+mean(sample(population,3, replace=T)) 
+sim <- rep(NA, 30)
+for(i in 1:30){
+  sim[i] <- mean(sample(population,3, replace=T))
+}
+hist(sim)
 
+
+for(i in 1:30){
+  sim[i] <- mean(sample(population,10, replace=T))
+}
+hist(sim)
+
+
+for(i in 1:30){
+  sim[i] <- mean(sample(population,15, replace=T))
+}
+hist(sim)
+shapiro.test(sim)
 
 
 #연속형(수치형) : summary, boxplot, hist, density 
@@ -52,11 +108,11 @@ t.test(mpg$hwy) #default mu=0이라 가정하고 계산
 install.packages("dplyr")
 library(dplyr)
 #대립가설 H_0 
-df <- mpg %>% filter(drv %in% c("f","r"))
+d1 <- mpg %>% filter(drv %in% c("f","r"))
 
-if(!require(care)) install.packages("car"); 
-library(car)
-leveneTest(cty~drv,data=df) #cty: 수치형 변수(시내연비 )  drv:집단 변수
+if(!require(car)) install.packages("car"); library(car)
+leveneTest(cty~drv, data=d1)
+
 t.test(cty~drv,data=df,var.equal=TRUE) # 전륜구동이 시내구동보다 효울이 좋다 
 
 #범주형 자료 
